@@ -1,0 +1,24 @@
+#content{
+    font-family: 'Amiri';
+}
+.header {
+    font-size: 1.6rem;
+    margin: 0 0px 5px 266px;
+}
+#table {
+    text-align: center;
+    border-collapse: collapse;
+    width: 585px;
+    margin-left: 5px;
+}
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    width: 100px;
+    padding: 5px;
+}
+th {
+    background: #e4d728;
+}
+

@@ -1,0 +1,18 @@
+.form{
+    margin-top: 50px;
+}
+.inputContainer > input {
+    width: 150px;
+    padding: 10px;
+    border-radius: 0.8rem;
+    border: 1px solid rgb(7, 7, 80);
+    margin-right: 5px;
+}
+button {
+    border-radius: 0.5rem;
+    padding: 10px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 5px;
+}
