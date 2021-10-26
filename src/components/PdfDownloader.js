@@ -40,12 +40,6 @@ const PdfDownloader = () => {
             }
 
             doc.save("화면.pdf");
-
-            // // 위에서 캔버스로 만든 가상화면을 이미지로 변환해준 => PDF 저장
-            // const imgData = await canvas.toDataURL("image/png");
-            // const pdf = new jsPDF("p","mm",[pageHeight, pageWidth]);
-            // pdf.addImage(imgData, "JPEG", 10, 10);  // 참고: 만약 imgData 캔버스 크기가 0이면 오류 발생함
-            // pdf.save(`${new Date().toISOString()}.pdf`); 
         } catch (error) {
             console.log(error);
         }
