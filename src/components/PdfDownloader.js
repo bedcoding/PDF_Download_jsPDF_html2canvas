@@ -14,28 +14,33 @@ const PdfDownloader = () => {
             const domElement = document.getElementById("content");  // "display": "none" 속성으로 PDF로 다운로드할 html 화면을 화면 어딘가에 숨겨놓는다.
             const canvas = await html2canvas(domElement, {
                 onclone: function (clonedDoc) {
-                    clonedDoc.getElementById('content').style.display = '';  // PDF로 다운로드할 html 화면을 복사할 때 display":''으로 스타일을 바꿔줘야 PDF 화면에 html 화면이 뜬다.
+                    clonedDoc.getElementById('content').style.display = '';  // onClone: 원본 소스 문서에 영향을 주지 않고 PDF 내용을 수정하는데 사용 (display":''으로 스타일을 바꿔줘야 PDF 화면에 html 화면이 뜬다)
                 }
             })
     
-            // 위에서 캔버스로 만든 가상화면을 이미지로 변환한 뒤 PDF 저장 (그냥 저장시 한글깨짐)
-            const imgData = canvas.toDataURL("image/jpeg");
+            // 1. html을 이미지로 바꾸기 (1.0: 최고화질)
+            const imgData = canvas.toDataURL("image/png", 1.0);
+
+            // 2. PDF 출력페이지 크기 설정후 공간 생성
             const pageWidth = 210; // 가로 길이 a4 기준
             const pageHeight = pageWidth * 1.414; // 출력 페이지 세로길이
             const imgWidth = pageWidth - 20;
             const imgHeight = canvas.height * imgWidth / canvas.width;
-            let heightLeft = imgHeight;
-            let position = 0;
-
             const doc = new jsPDF("p", "mm", [pageHeight, pageWidth]);
-            doc.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+
+            // 3. PDF 출력페이지에 이미지로 바꾼 html 넣기
+            let x = 0;
+            let y = 0;
+            doc.addImage(imgData, "JPEG", x, y, imgWidth, imgHeight);
+
+            // 4. 한 페이지 이상일 경우 루프 돌면서 출력
+            let heightLeft = imgHeight;
             heightLeft -= pageHeight;
 
-            // 한 페이지 이상일 경우 루프 돌면서 출력
             while (heightLeft >= 20) {
-                position = heightLeft - imgHeight;
+                y = heightLeft - imgHeight;
                 doc.addPage();
-                doc.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+                doc.addImage(imgData, "JPEG", 0, y, imgWidth, imgHeight);
                 heightLeft -= pageHeight;
             }
 
