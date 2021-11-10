@@ -13,6 +13,7 @@ const PdfDownloader = () => {
         try {
             const domElement = document.getElementById("content");  // "display": "none" 속성으로 PDF로 다운로드할 html 화면을 화면 어딘가에 숨겨놓는다.
             const canvas = await html2canvas(domElement, {
+                scale: 1,  // 브라우저 화면을 확대하면 html도 커진 채로 캔버스에 저장되서 A4 용지를 초과해버리니 오리지날 형태를 고정시킨다.
                 onclone: function (clonedDoc) {
                     clonedDoc.getElementById('content').style.display = '';  // onClone: 원본 소스 문서에 영향을 주지 않고 PDF 내용을 수정하는데 사용 (display":''으로 스타일을 바꿔줘야 PDF 화면에 html 화면이 뜬다)
                 }
